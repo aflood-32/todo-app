@@ -1,9 +1,7 @@
+import { BoardPage } from "@pages/board-page";
+
 function App() {
-  return (
-    <>
-      <h1>app</h1>
-    </>
-  );
+  return <BoardPage />;
 }
 
 export default App;

@@ -1,0 +1,7 @@
+.header{
+    background-color: var(--color-header-background);
+    padding: 0.8rem;
+    height: var(--app-header-height);
+    border-bottom: 0.1rem solid var(--color-border);
+    flex: 0 0 auto;
+}

@@ -9,10 +9,12 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky",
-    "test": "jest"
+    "test": "jest",
+    "create-segment": "node create-segment.mjs"
   },
   "dependencies": {
     "jest-environment-jsdom": "^29.7.0",
+    "lucide-react": "^0.484.0",
     "modern-normalize": "^3.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
