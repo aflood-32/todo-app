@@ -1,0 +1,26 @@
+.task{
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+
+    &.is_hidden{
+        display: none;
+    }
+}
+
+.task__body{
+    list-style: none;
+    font-size: 1.4rem;
+    padding: 0.8rem 1rem;
+    background: var(--color-task-background);
+    border-radius: 0.6rem;
+
+    &.is_dragging{
+        opacity: 0.4;
+    }
+}
+
+.task__backdrop {
+    background: var(--color-task-backdrop);
+    border-radius: 0.6rem;
+}
