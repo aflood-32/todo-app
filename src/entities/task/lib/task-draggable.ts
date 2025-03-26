@@ -1,5 +1,6 @@
 import invariant from "tiny-invariant";
 
+import { IDLE_STATE } from "../lib/idle-state";
 import { TaskState } from "../types";
 
 import { getTaskInitialData, isTaskData } from "./dnd-data-utils";
@@ -55,7 +56,7 @@ const taskDraggable = ({
       setTaskState({ type: "is-dragging" });
     },
     onDrop() {
-      setTaskState({ type: "idle" });
+      setTaskState(IDLE_STATE);
     },
   });
 };

@@ -1,3 +1,4 @@
+import { IDLE_STATE } from "../lib/idle-state";
 import { TaskState } from "../types";
 
 import {
@@ -106,10 +107,10 @@ const taskDropTarget = ({
         return;
       }
 
-      setTaskState({ type: "idle" });
+      setTaskState(IDLE_STATE);
     },
     onDrop() {
-      setTaskState({ type: "idle" });
+      setTaskState(IDLE_STATE);
     },
   });
 };

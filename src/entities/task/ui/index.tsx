@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import invariant from "tiny-invariant";
 
+import { IDLE_STATE } from "../lib/idle-state";
 import taskDraggable from "../lib/task-draggable";
 import taskDropTarget from "../lib/task-drop-target";
 import { TaskProps, TaskState } from "../types";
@@ -11,7 +12,7 @@ import TaskDisplay from "./TaskDisplay";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 
 const Task = ({ title, taskId, columnId }: TaskProps) => {
-  const [taskState, setTaskState] = useState<TaskState>({ type: "idle" });
+  const [taskState, setTaskState] = useState<TaskState>(IDLE_STATE);
 
   const outerRef = useRef<HTMLLIElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
