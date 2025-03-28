@@ -6,12 +6,12 @@ const boardApi = {
     const getTasks = (() => {
       let count = 0;
 
-      return function getCards(amount: number): Task[] {
+      return function getTasks(amount: number): Task[] {
         return Array.from({ length: amount }, (): Task => {
           const id = count++;
           return {
-            id: `card:${id.toString()}`,
-            title: `Card ${id.toString()}`,
+            id: `task ${id.toString()}`,
+            title: `Task ${id.toString()}`,
           };
         });
       };
