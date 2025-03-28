@@ -1,3 +1,9 @@
+/**
+ * Task drag-and-drop data utilities
+ *
+ * @description Provides type guards and data generators for task drag operations
+ */
+
 import { Task } from "../@x";
 
 const taskKey = Symbol("task");
@@ -32,7 +38,12 @@ const isTaskData = (sourceData: unknown): sourceData is TaskData =>
   sourceData !== null &&
   taskKey in sourceData;
 
-const isTaskDragging = ({
+const isTaskDropTargetData = (sourceData: unknown): sourceData is TaskData =>
+  typeof sourceData === "object" &&
+  sourceData !== null &&
+  taskDropTargetKey in sourceData;
+
+const isDraggingATask = ({
   source,
 }: {
   source: { data: Record<string | symbol, unknown> };
@@ -56,6 +67,7 @@ const getTaskDropTargetData = ({
 export {
   getTaskDropTargetData,
   getTaskInitialData,
+  isDraggingATask,
   isTaskData,
-  isTaskDragging,
+  isTaskDropTargetData,
 };

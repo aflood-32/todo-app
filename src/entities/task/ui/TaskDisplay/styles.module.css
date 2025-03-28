@@ -14,13 +14,16 @@
     padding: 0.8rem 1rem;
     background: var(--color-task-background);
     border-radius: 0.6rem;
+    border: 1px solid transparent;
+    cursor: pointer;
 
     &.is_dragging{
         opacity: 0.4;
     }
+
+    &:not(.is_dragging):hover{
+        border-color: var(--color-primary-hover);
+    }
 }
 
-.task__backdrop {
-    background: var(--color-task-backdrop);
-    border-radius: 0.6rem;
-}
+

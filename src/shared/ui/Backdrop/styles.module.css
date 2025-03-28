@@ -1,0 +1,4 @@
+.backdrop {
+    background: var(--color-backdrop);
+    border-radius: 0.6rem;
+}
