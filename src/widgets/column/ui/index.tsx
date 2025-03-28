@@ -18,6 +18,7 @@ import {
   isTaskDropTargetData,
   TaskData,
 } from "@entities/task";
+import { blockBoardPanningAttr } from "@shared/lib/block-board-panning-attr.ts";
 import { IDLE_STATE } from "@shared/lib/idle-state";
 import { isShallowEqual } from "@shared/lib/is-shallow-equal";
 import Backdrop from "@ui/Backdrop";
@@ -133,6 +134,7 @@ const Column = ({ id, tasks, title }: ColumnType) => {
           innerClassNames[columnState.type],
         ].join(" ")}
         ref={innerRef}
+        {...{ [blockBoardPanningAttr]: true }}
       >
         <div className={styles.column__header} ref={headerRef}>
           {title}
