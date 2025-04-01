@@ -61,6 +61,11 @@ const Column = ({ id, tasks, title }: ColumnType) => {
     ({ data, location }: { data: TaskData; location: DragLocationHistory }) => {
       const innerMost = location.current.dropTargets[0];
 
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!innerMost) {
+        return;
+      }
+
       const isOverChildTask = Boolean(isTaskDropTargetData(innerMost.data));
 
       const proposed: ColumnState = {

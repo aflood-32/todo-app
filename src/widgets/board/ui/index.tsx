@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { use, useCallback, useEffect, useRef } from "react";
 import { bindAll } from "bind-event-listener";
 import invariant from "tiny-invariant";
 
@@ -11,10 +11,11 @@ import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { CleanupFn } from "@atlaskit/pragmatic-drag-and-drop/dist/types/internal-types";
 import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/element";
 import { unsafeOverflowAutoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/unsafe-overflow/element";
-import { boardApi } from "@entities/board";
+import { BoardDispatchContext, BoardStateContext } from "@entities/board";
 import { Column, isDraggingAColumn } from "@entities/column";
 import { isDraggingATask } from "@entities/task";
-import { blockBoardPanningAttr } from "@shared/lib/block-board-panning-attr.ts";
+import { CreateColumn } from "@features/create-column";
+import { blockBoardPanningAttr } from "@shared/lib/block-board-panning-attr";
 
 interface BoardProps {
   ColumnComponent: React.FC<Column>;
@@ -23,7 +24,15 @@ interface BoardProps {
 const SCROLL_OFFSET = 1000;
 
 const Board = ({ ColumnComponent }: BoardProps) => {
-  const [columns, setColumnsData] = useState(boardApi.get());
+  const columns = use(BoardStateContext);
+  const dispatch = use(BoardDispatchContext);
+
+  const setColumnsData = useCallback(
+    (updatedColumns: Column[]) => {
+      dispatch({ type: "SET_BOARD_DATA", payload: updatedColumns });
+    },
+    [dispatch],
+  );
 
   const scrollableRef = useRef<HTMLDivElement | null>(null);
 
@@ -62,7 +71,7 @@ const Board = ({ ColumnComponent }: BoardProps) => {
         },
       }),
     );
-  }, [columns]);
+  }, [columns, setColumnsData]);
 
   useEffect(() => {
     let cleanupActive: CleanupFn | null = null;
@@ -85,7 +94,6 @@ const Board = ({ ColumnComponent }: BoardProps) => {
               scrollable?.scrollBy({ left: diffX });
             },
           },
-          // stop panning if we see any of these events
           ...(
             [
               "pointercancel",
@@ -103,8 +111,6 @@ const Board = ({ ColumnComponent }: BoardProps) => {
             },
           })),
         ],
-        // need to make sure we are not after the "pointerdown" on the scrollable
-        // Also this is helpful to make sure we always hear about events from this point
         { capture: true },
       );
 
@@ -144,6 +150,7 @@ const Board = ({ ColumnComponent }: BoardProps) => {
           title={column.title}
         />
       ))}
+      <CreateColumn />
     </main>
   );
 };
