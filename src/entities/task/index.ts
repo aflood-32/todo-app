@@ -4,7 +4,8 @@ import {
   isTaskData,
   isTaskDropTargetData,
 } from "./lib/dnd-data-utils";
+import { Task as TaskType } from "./@x";
 import Task from "./ui";
 
-export type { TaskData };
+export type { TaskData, TaskType };
 export { isDraggingATask, isTaskData, isTaskDropTargetData, Task };

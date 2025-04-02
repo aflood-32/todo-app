@@ -4,18 +4,18 @@ import styles from "./styles.module.css";
 
 import Textarea from "@ui/Textarea";
 
-interface CreateColumnFormProps extends PropsWithChildren {
+interface CreateTaskFormProps extends PropsWithChildren {
   ref: RefObject<HTMLFormElement | null>;
   onSubmitSuccess: (title: string) => void;
 }
 
-const textAreaLabel = "Enter column name";
+const textAreaLabel = "Enter task name";
 
-const CreateColumnForm = ({
+const CreateTaskForm = ({
   ref,
   onSubmitSuccess,
   children,
-}: CreateColumnFormProps) => {
+}: CreateTaskFormProps) => {
   const [formData, setFormData] = useState<{ title: string }>({ title: "" });
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -45,4 +45,4 @@ const CreateColumnForm = ({
   );
 };
 
-export default CreateColumnForm;
+export default CreateTaskForm;

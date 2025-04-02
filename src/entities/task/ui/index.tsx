@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import invariant from "tiny-invariant";
 
@@ -77,4 +77,4 @@ const Task = ({ title, taskId, columnId }: TaskProps) => {
   );
 };
 
-export default Task;
+export default memo(Task);

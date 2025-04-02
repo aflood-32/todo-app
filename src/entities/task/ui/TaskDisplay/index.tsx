@@ -30,6 +30,7 @@ const TaskDisplay = ({
   outerRef,
   innerRef,
 }: TaskDisplayProps) => {
+  console.log("dispal;");
   return (
     <li
       ref={outerRef}

@@ -5,7 +5,6 @@ import columnDraggableHeader from "../lib/column-draggable-header";
 import columnDropTarget from "../lib/column-drop-target";
 import { ColumnState } from "../types";
 
-import ColumnFooter from "./ColumnFooter";
 import ColumnHeader from "./ColumnHeader";
 import styles from "./styles.module.css";
 import TasksList from "./TasksList";
@@ -20,7 +19,8 @@ import {
   isTaskDropTargetData,
   TaskData,
 } from "@entities/task";
-import { blockBoardPanningAttr } from "@shared/lib/block-board-panning-attr.ts";
+import { CreateTask } from "@features/upsert-task";
+import { blockBoardPanningAttr } from "@shared/lib/block-board-panning-attr";
 import { IDLE_STATE } from "@shared/lib/idle-state";
 import { isShallowEqual } from "@shared/lib/is-shallow-equal";
 import Backdrop from "@ui/Backdrop";
@@ -148,12 +148,12 @@ const Column = ({ id, tasks, title }: ColumnType) => {
           <TasksList tasks={tasks} columnId={id} />
           {columnState.type === "is-task-over" &&
           !columnState.isOverChildTask ? (
-            <div className="flex-shrink-0 px-3 py-1">
-              <Backdrop height={columnState.dragging.height} />
-            </div>
+            <Backdrop height={columnState.dragging.height} />
           ) : null}
         </ul>
-        <ColumnFooter />
+        <div className={styles.column__footer}>
+          <CreateTask columnId={id} />
+        </div>
       </div>
     </div>
   );
