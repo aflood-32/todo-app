@@ -1,0 +1,19 @@
+.primary_button{
+    border: none;
+    padding: 0.6rem 1.2rem;
+    color: var(--color-text-inverse);
+    background-color: var(--color-primary-background);
+    border-radius: 0.2rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color ease-in-out var(--default-transition-duration);
+
+    &:hover{
+        background-color: var(--color-primary-hover);
+    }
+
+    &:active{
+        background: var(--color-primary-active);
+    }
+}

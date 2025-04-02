@@ -16,7 +16,7 @@ import {
  */
 interface MonitorForTasksArgs {
   columns: Column[];
-  setColumnsData: React.Dispatch<React.SetStateAction<Column[]>>;
+  setColumnsData: (updatedColumns: Column[]) => void;
 }
 
 /**

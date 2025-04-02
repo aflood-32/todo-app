@@ -11,7 +11,7 @@ import { Column, isColumnData, isDraggingAColumn } from "@entities/column";
  */
 interface MonitorForColumnsArgs {
   columns: Column[];
-  setColumnsData: React.Dispatch<React.SetStateAction<Column[]>>;
+  setColumnsData: (updatedColumns: Column[]) => void;
 }
 
 /**

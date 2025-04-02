@@ -1,0 +1,14 @@
+.column__header{
+    padding: 0.8rem 0.8rem 0;
+    font-size: 1.4rem;
+    cursor: pointer;
+    font-weight: 500;
+    min-height: 4.2rem;
+}
+
+.column__header_title{
+    font-size: inherit;
+    margin: 0;
+    line-height: 2rem;
+    padding: 0.6rem 1.2rem;
+}

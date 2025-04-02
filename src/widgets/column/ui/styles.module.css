@@ -1,5 +1,5 @@
 .column {
-    width: 28rem;
+    width: var(--col-width);
     flex: 0 0 auto;
     min-height: 0;
     display: flex;
@@ -10,7 +10,7 @@
     background: var(--color-column-background);
     min-height: 0;
     max-height: 100%;
-    border-radius: 1.2rem;
+    border-radius: var(--col-border-radius);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -42,8 +42,7 @@
     padding: 0 1.2rem;
 }
 
-.column__header, .column__footer{
+.column__footer{
     padding: 1.2rem 2rem;
     font-size: 1.4rem;
-    cursor: grab;
 }
