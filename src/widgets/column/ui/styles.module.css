@@ -42,8 +42,7 @@
     padding: 0 1.2rem;
 }
 
-.column__header, .column__footer{
+.column__footer{
     padding: 1.2rem 2rem;
     font-size: 1.4rem;
-    cursor: grab;
 }

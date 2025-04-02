@@ -6,13 +6,25 @@
     --color-task-background: #22272B;
     --color-backdrop: #191a22;
     --color-text: #B6C2CF;
+    --color-text-inverse: #1D2125;
     --color-border: hsla(211, 18%, 68%, 0.16);
     --color-primary-hover: #85b8ff;
+    --color-primary-active: #CCE0FF;
+    --color-default-text: #9FADBC;
+    --color-default-hover: #A6C5E229;
+    --color-default-active: #BFDBF847;
+    --color-input-background: #22272b;
+    --color-input-background-hover: #282E33;
+    --color-input-box-shadow: #738496;
+    --color-input-box-shadow-focuse: #388bff;
+    --color-primary-background: #579DFF;
 
     --board-padding: 1.6rem;
     --app-header-height: 4.8rem;
     --col-border-radius: 1.2rem;
     --col-width: 28rem;
+
+    --default-transition-duration: .2s;
 }
 
 

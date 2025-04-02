@@ -1,7 +1,7 @@
 import {
   BoardActions,
   BoardStateContext as BoardStateContextType,
-} from "../types/board-context.ts";
+} from "../types/board-context";
 
 const boardReducer = (
   state: BoardStateContextType,
@@ -12,6 +12,12 @@ const boardReducer = (
       return action.payload;
     case "ADD_COLUMN":
       return [...state, action.payload];
+    case "UPDATE_COLUMN":
+      return state.map((column) =>
+        column.id === action.payload.id
+          ? { ...column, ...action.payload }
+          : column,
+      );
     case "ADD_TASK":
       return state.map((column) => {
         if (column.id === action.payload.columnId) {

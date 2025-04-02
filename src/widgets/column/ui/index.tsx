@@ -5,6 +5,8 @@ import columnDraggableHeader from "../lib/column-draggable-header";
 import columnDropTarget from "../lib/column-drop-target";
 import { ColumnState } from "../types";
 
+import ColumnFooter from "./ColumnFooter";
+import ColumnHeader from "./ColumnHeader";
 import styles from "./styles.module.css";
 import TasksList from "./TasksList";
 
@@ -141,9 +143,7 @@ const Column = ({ id, tasks, title }: ColumnType) => {
         ref={innerRef}
         {...{ [blockBoardPanningAttr]: true }}
       >
-        <div className={styles.column__header} ref={headerRef}>
-          {title}
-        </div>
+        <ColumnHeader ref={headerRef} columnId={id} title={title} />
         <ul className={styles.column__body} ref={scrollableRef}>
           <TasksList tasks={tasks} columnId={id} />
           {columnState.type === "is-task-over" &&
@@ -153,7 +153,7 @@ const Column = ({ id, tasks, title }: ColumnType) => {
             </div>
           ) : null}
         </ul>
-        <div className={styles.column__footer}>{title}</div>
+        <ColumnFooter />
       </div>
     </div>
   );

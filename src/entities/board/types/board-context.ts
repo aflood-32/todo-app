@@ -13,6 +13,10 @@ export type BoardActions =
       payload: Column;
     }
   | {
+      type: "UPDATE_COLUMN";
+      payload: Partial<Column>;
+    }
+  | {
       type: "ADD_TASK";
       payload: {
         newTask: Task;
