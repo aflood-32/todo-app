@@ -1,25 +1,25 @@
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { reorder } from "@atlaskit/pragmatic-drag-and-drop/reorder";
-import { Column, isColumnData, isDraggingAColumn } from "@entities/column";
+import { ColumnType, isColumnData, isDraggingAColumn } from "@entities/column";
 
 /**
  * Configuration for column drag monitoring
  *
  * @interface MonitorForColumnsArgs
- * @property {Column[]} columns - Current columns state
- * @property {React.Dispatch<React.SetStateAction<Column[]>>} setColumnsData - State updater
+ * @property {ColumnType[]} columns - Current columns state
+ * @property {React.Dispatch<React.SetStateAction<ColumnType[]>>} setColumnsData - State updater
  */
 interface MonitorForColumnsArgs {
-  columns: Column[];
-  setColumnsData: (updatedColumns: Column[]) => void;
+  columns: ColumnType[];
+  setColumnsData: (updatedColumns: ColumnType[]) => void;
 }
 
 /**
  * Monitors and handles column reordering via drag-and-drop
  *
  * @param {MonitorForColumnsArgs} config - Monitoring configuration
- * @param {Column[]} config.columns - Current columns array
- * @param {React.Dispatch<React.SetStateAction<Column[]>>} config.setColumnsData - Columns state setter
+ * @param {ColumnType[]} config.columns - Current columns array
+ * @param {React.Dispatch<React.SetStateAction<ColumnType[]>>} config.setColumnsData - Columns state setter
  *
  * @returns {Function} Cleanup function to stop monitoring
  *
@@ -37,11 +37,13 @@ const monitorForColumns = ({
     canMonitor: isDraggingAColumn,
     onDrop({ source, location }) {
       const dragging = source.data;
-      if (!isColumnData(dragging)) {
+      const innerMost = location.current.dropTargets[0];
+
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!isColumnData(dragging) || !innerMost) {
         return;
       }
 
-      const innerMost = location.current.dropTargets[0];
       const dropTargetData = innerMost.data;
 
       if (!isColumnData(dropTargetData)) {

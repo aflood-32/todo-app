@@ -10,6 +10,13 @@ interface CreateTaskArgs {
   onCreateComplete?: () => void;
 }
 
+interface UpdateTaskArgs {
+  columnId: string;
+  taskId: string;
+  updatedTask: Pick<TaskType, "title">;
+  onUpdateComplete?: () => void;
+}
+
 const useCreateTask = () => {
   const dispatch = use(BoardDispatchContext);
 
@@ -17,7 +24,10 @@ const useCreateTask = () => {
     ({ columnId, newTask, onCreateComplete }: CreateTaskArgs) => {
       dispatch({
         type: "ADD_TASK",
-        payload: { columnId, newTask: { id: uuidv4(), title: newTask.title } },
+        payload: {
+          columnId,
+          newTask: { id: uuidv4(), title: newTask.title, completed: false },
+        },
       });
 
       if (onCreateComplete) {
@@ -27,7 +37,25 @@ const useCreateTask = () => {
     [dispatch],
   );
 
-  return { createTask };
+  const updateTask = useCallback(
+    ({ columnId, updatedTask, onUpdateComplete, taskId }: UpdateTaskArgs) => {
+      dispatch({
+        type: "UPDATE_TASK",
+        payload: {
+          columnId,
+          updatedTask: { title: updatedTask.title },
+          taskId,
+        },
+      });
+
+      if (onUpdateComplete) {
+        onUpdateComplete();
+      }
+    },
+    [dispatch],
+  );
+
+  return { createTask, updateTask };
 };
 
 export default useCreateTask;

@@ -1,32 +1,32 @@
-import { Column } from "@entities/column/@x";
-import { Task } from "@entities/task/@x";
+import { ColumnType } from "@entities/column/@x";
+import { TaskType } from "@entities/task/@x";
 
-export type BoardStateContext = Column[];
+export type BoardStateContext = ColumnType[];
 
 export type BoardActions =
   | {
       type: "SET_BOARD_DATA";
-      payload: Column[];
+      payload: ColumnType[];
     }
   | {
       type: "ADD_COLUMN";
-      payload: Column;
+      payload: ColumnType;
     }
   | {
       type: "UPDATE_COLUMN";
-      payload: Partial<Column>;
+      payload: Partial<ColumnType>;
     }
   | {
       type: "ADD_TASK";
       payload: {
-        newTask: Task;
+        newTask: TaskType;
         columnId: string;
       };
     }
   | {
       type: "UPDATE_TASK";
       payload: {
-        updatedTask: Partial<Task>;
+        updatedTask: Partial<TaskType>;
         columnId: string;
         taskId: string;
       };

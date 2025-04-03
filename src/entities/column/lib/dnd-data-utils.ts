@@ -4,13 +4,13 @@
  * @description Provides type guards and data generators for column drag operations
  */
 
-import { Column } from "@entities/column";
+import { ColumnType } from "@entities/column";
 
 const columnKey = Symbol("column");
 
 export interface ColumnData {
   [columnKey]: true;
-  column: Column;
+  column: ColumnType;
 }
 
 const getColumnData = ({ column }: Omit<ColumnData, typeof columnKey>) => {

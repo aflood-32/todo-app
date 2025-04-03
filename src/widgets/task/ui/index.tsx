@@ -29,7 +29,7 @@ import { IDLE_STATE } from "@shared/lib/idle-state";
  *
  */
 
-const Task = ({ title, taskId, columnId }: TaskProps) => {
+const Task = ({ id, title, completed, columnId }: TaskProps) => {
   const [taskState, setTaskState] = useState<TaskState>(IDLE_STATE);
 
   const outerRef = useRef<HTMLLIElement | null>(null);
@@ -44,20 +44,18 @@ const Task = ({ title, taskId, columnId }: TaskProps) => {
     return combine(
       taskDraggable({
         element: inner,
-        taskId,
+        task: { id, title, completed },
         columnId,
-        title,
         setTaskState,
       }),
       taskDropTarget({
         element: inner,
-        taskId,
+        task: { id, title, completed },
         columnId,
-        title,
         setTaskState,
       }),
     );
-  }, [taskId, title, columnId]);
+  }, [title, columnId, id, completed]);
 
   return (
     <>
@@ -65,11 +63,20 @@ const Task = ({ title, taskId, columnId }: TaskProps) => {
         outerRef={outerRef}
         innerRef={innerRef}
         state={taskState}
+        id={id}
         title={title}
+        completed={completed}
+        columnId={columnId}
       />
       {taskState.type === "preview"
         ? createPortal(
-            <TaskDisplay state={taskState} title={title} />,
+            <TaskDisplay
+              state={taskState}
+              id={id}
+              title={title}
+              completed={completed}
+              columnId={columnId}
+            />,
             taskState.container,
           )
         : null}

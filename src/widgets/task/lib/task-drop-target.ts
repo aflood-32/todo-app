@@ -1,16 +1,12 @@
 import { TaskState } from "../types";
 
-import {
-  getTaskDropTargetData,
-  isDraggingATask,
-  isTaskData,
-} from "./dnd-data-utils";
-
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import {
   attachClosestEdge,
   extractClosestEdge,
 } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
+import { isDraggingATask, isTaskData, TaskType } from "@entities/task";
+import { getTaskDropTargetData } from "@entities/task/lib/dnd-data-utils.ts";
 import { IDLE_STATE } from "@shared/lib/idle-state";
 import { isShallowEqual } from "@shared/lib/is-shallow-equal";
 
@@ -26,8 +22,7 @@ import { isShallowEqual } from "@shared/lib/is-shallow-equal";
  */
 interface DraggableArgs {
   element: HTMLElement;
-  taskId: string;
-  title: string;
+  task: TaskType;
   columnId: string;
   setTaskState: React.Dispatch<React.SetStateAction<TaskState>>;
 }
@@ -55,8 +50,7 @@ interface DraggableArgs {
  */
 const taskDropTarget = ({
   element,
-  taskId,
-  title,
+  task,
   columnId,
   setTaskState,
 }: DraggableArgs) => {
@@ -66,7 +60,7 @@ const taskDropTarget = ({
     canDrop: isDraggingATask,
     getData: ({ element, input }) => {
       const data = getTaskDropTargetData({
-        task: { id: taskId, title },
+        task,
         columnId,
       });
 
@@ -81,7 +75,7 @@ const taskDropTarget = ({
         return;
       }
 
-      if (source.data.task.id === taskId) {
+      if (source.data.task.id === task.id) {
         return;
       }
 
@@ -102,7 +96,7 @@ const taskDropTarget = ({
         return;
       }
 
-      if (source.data.task.id === taskId) {
+      if (source.data.task.id === task.id) {
         return;
       }
 
@@ -131,7 +125,7 @@ const taskDropTarget = ({
         return;
       }
 
-      if (source.data.task.id === taskId) {
+      if (source.data.task.id === task.id) {
         setTaskState({ type: "is-dragging-and-left-self" });
         return;
       }

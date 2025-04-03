@@ -7,17 +7,17 @@ import { ColumnState } from "../types";
 
 import ColumnHeader from "./ColumnHeader";
 import styles from "./styles.module.css";
-import TasksList from "./TasksList";
 
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { DragLocationHistory } from "@atlaskit/pragmatic-drag-and-drop/dist/types/internal-types";
 import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/element";
 import { unsafeOverflowAutoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/unsafe-overflow/element";
-import { Column as ColumnType, getColumnData } from "@entities/column";
+import { ColumnType as ColumnType, getColumnData } from "@entities/column";
 import {
   isDraggingATask,
   isTaskDropTargetData,
   TaskData,
+  TaskType,
 } from "@entities/task";
 import { CreateTask } from "@features/upsert-task";
 import { blockBoardPanningAttr } from "@shared/lib/block-board-panning-attr";
@@ -33,6 +33,10 @@ const innerClassNames: Partial<Record<ColumnState["type"], string>> = {
 
 const SCROLL_OFFSET = 1000;
 
+type ColumnProps = ColumnType & {
+  TaskComponent: React.FC<TaskType & { columnId: string }>;
+};
+
 /**
  * Column component for a kanban-style board.
  * Supports drag-and-drop, auto-scrolling, and dynamic task rendering.
@@ -44,7 +48,7 @@ const SCROLL_OFFSET = 1000;
  * @returns {JSX.Element} The rendered column.
  */
 
-const Column = ({ id, tasks, title }: ColumnType) => {
+const Column = ({ id, tasks, title, TaskComponent }: ColumnProps) => {
   const [columnState, setColumnState] = useState<ColumnState>(IDLE_STATE);
 
   const headerRef = useRef<HTMLDivElement | null>(null);
@@ -145,7 +149,9 @@ const Column = ({ id, tasks, title }: ColumnType) => {
       >
         <ColumnHeader ref={headerRef} columnId={id} title={title} />
         <ul className={styles.column__body} ref={scrollableRef}>
-          <TasksList tasks={tasks} columnId={id} />
+          {tasks.map((task) => (
+            <TaskComponent key={task.id} columnId={id} {...task} />
+          ))}
           {columnState.type === "is-task-over" &&
           !columnState.isOverChildTask ? (
             <Backdrop height={columnState.dragging.height} />

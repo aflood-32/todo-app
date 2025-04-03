@@ -1,7 +1,7 @@
-import { Task } from "@entities/task/@x";
+import { TaskType } from "@entities/task/@x";
 
-export interface Column {
+export interface ColumnType {
   id: string;
   title: string;
-  tasks: Task[];
+  tasks: TaskType[];
 }

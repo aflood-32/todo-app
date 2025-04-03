@@ -1,11 +1,10 @@
 import { RefObject } from "react";
 
 import type { Edge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
+import type { TaskType } from "@entities/task";
 
-export interface TaskProps {
-  taskId: string;
+export interface TaskProps extends TaskType {
   columnId: string;
-  title: string;
 }
 
 export type TaskState =
@@ -29,8 +28,7 @@ export type TaskState =
       dragging: DOMRect;
     };
 
-export interface TaskDisplayProps {
-  title: string;
+export interface TaskDisplayProps extends TaskProps {
   state: TaskState;
   outerRef?: RefObject<HTMLLIElement | null>;
   innerRef?: RefObject<HTMLDivElement | null>;

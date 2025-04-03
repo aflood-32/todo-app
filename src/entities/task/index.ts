@@ -1,11 +1,16 @@
 import type { TaskData } from "./lib/dnd-data-utils";
 import {
+  getTaskInitialData,
   isDraggingATask,
   isTaskData,
   isTaskDropTargetData,
 } from "./lib/dnd-data-utils";
-import { Task as TaskType } from "./@x";
-import Task from "./ui";
+import { TaskType as TaskType } from "./@x";
 
 export type { TaskData, TaskType };
-export { isDraggingATask, isTaskData, isTaskDropTargetData, Task };
+export {
+  getTaskInitialData,
+  isDraggingATask,
+  isTaskData,
+  isTaskDropTargetData,
+};
