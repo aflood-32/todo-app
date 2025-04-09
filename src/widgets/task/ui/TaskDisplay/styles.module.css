@@ -20,6 +20,14 @@
         }
     }
 
+    &:hover{
+        .task__edit_container{
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    }
+
     &.completed{
         .task__title{
             text-decoration: line-through;
@@ -31,7 +39,7 @@
 .task__body{
     list-style: none;
     font-size: 1.4rem;
-    padding: 0.8rem 1rem;
+    padding: 0.8rem 2.5rem 0.8rem 1rem;
     background: var(--color-task-background);
     border-radius: 0.6rem;
     border: 1px solid transparent;
@@ -57,9 +65,11 @@
 
 .task__edit_container{
     position: absolute;
-    background: #000;
-    right: 0;
-    top: 0;
+    right: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity ease-in-out var(--default-transition-duration);
 }
 
 .task__mark_as_complete_container {

@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import { X } from "lucide-react";
 
 import styles from "./styles.module.css";
@@ -5,12 +6,16 @@ import styles from "./styles.module.css";
 import Button from "@ui/Button";
 import PrimaryButton from "@ui/PrimaryButton";
 
-interface FormFooterProps {
+interface FormFooterProps extends PropsWithChildren {
   submitButtonLabel: string;
   onDismiss?: () => void;
 }
 
-const FormFooter = ({ submitButtonLabel, onDismiss }: FormFooterProps) => {
+const FormFooter = ({
+  submitButtonLabel,
+  onDismiss,
+  children,
+}: FormFooterProps) => {
   return (
     <div className={styles.form_footer}>
       <PrimaryButton type="submit">{submitButtonLabel}</PrimaryButton>
@@ -19,6 +24,7 @@ const FormFooter = ({ submitButtonLabel, onDismiss }: FormFooterProps) => {
           <X size={20} color="var(--color-text)" />
         </Button>
       )}
+      {children}
     </div>
   );
 };

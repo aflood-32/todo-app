@@ -2,7 +2,9 @@ import { TaskDisplayProps, TaskState } from "../../types";
 
 import styles from "./styles.module.css";
 
+import { DeleteTask } from "@features/delete-task";
 import { MarkTaskAsComplete } from "@features/mark-task-as-complete";
+import { UpdateTask } from "@features/upsert-task";
 import Backdrop from "@ui/Backdrop";
 
 const outerClassNames: Partial<Record<TaskState["type"], string>> = {
@@ -68,7 +70,16 @@ const TaskDisplay = ({
           />
         </div>
         <div className={styles.task__title}>{title}</div>
-        {/*<div className={styles.task__edit_container}>{updateTask}</div>*/}
+        <div className={styles.task__edit_container}>
+          <UpdateTask
+            columnId={columnId}
+            taskId={id}
+            initialValue={title}
+            outerRef={outerRef}
+          >
+            <DeleteTask columnId={columnId} taskId={id} />
+          </UpdateTask>
+        </div>
       </div>
       {state.type === "is-over" && state.closestEdge === "bottom" ? (
         <Backdrop height={state.dragging.height} />

@@ -1,5 +1,9 @@
-.update_task__button{
-    /*position: absolute;*/
-    /*right: 0;*/
-    /*top: 0;*/
+.update_task__container{
+    background: rgba(0, 0, 0, 0.6);
+    inset: 0;
+    position: fixed;
+}
+
+.update_task__block{
+    position: absolute;
 }

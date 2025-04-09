@@ -30,4 +30,11 @@ export type BoardActions =
         columnId: string;
         taskId: string;
       };
+    }
+  | {
+      type: "DELETE_TASK";
+      payload: {
+        columnId: string;
+        taskId: string;
+      };
     };

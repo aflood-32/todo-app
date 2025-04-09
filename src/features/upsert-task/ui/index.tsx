@@ -1,18 +1,19 @@
-import { memo, useRef, useState } from "react";
+import { memo, PropsWithChildren, RefObject, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Edit, Plus } from "lucide-react";
+import invariant from "tiny-invariant";
 
-import useCreateTask from "../lib/useCreateTask.tsx";
+import useCreateTask from "../lib/useCreateTask";
 
 import styles from "./styles.module.css";
 import UpsertTaskForm from "./UpsertTaskForm";
 
 import useClickOutside from "@shared/lib/useClickOutside";
+import { WithIds } from "@shared/types/with-ids";
 import Button from "@ui/Button";
 import FormFooter from "@ui/FormFooter";
 
-interface CreateTaskProps {
-  columnId: string;
-}
+type CreateTaskProps = Pick<Required<WithIds>, "columnId">;
 
 const CreateTask = memo(({ columnId }: CreateTaskProps) => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -62,53 +63,73 @@ const CreateTask = memo(({ columnId }: CreateTaskProps) => {
   );
 });
 
-interface UpdateTaskProps extends CreateTaskProps {
-  columnId: string;
-  taskId: string;
+interface UpdateTaskProps extends Required<WithIds>, PropsWithChildren {
+  outerRef?: RefObject<HTMLLIElement | null>;
+  initialValue: string;
 }
 
-const UpdateTask = memo(({ columnId, taskId }: UpdateTaskProps) => {
-  const formRef = useRef<HTMLFormElement>(null);
+const UpdateTask = memo(
+  ({ columnId, taskId, initialValue, outerRef, children }: UpdateTaskProps) => {
+    const formRef = useRef<HTMLFormElement>(null);
 
-  const [isUpdateActive, setIsUpdateActive] = useState(false);
+    const [isUpdateActive, setIsUpdateActive] = useState(false);
 
-  useClickOutside(formRef, () => {
-    setIsUpdateActive(false);
-  });
+    useClickOutside(formRef, () => {
+      setIsUpdateActive(false);
+    });
 
-  const { updateTask } = useCreateTask();
+    const { updateTask } = useCreateTask();
 
-  return (
-    <>
-      {!isUpdateActive && (
-        <button type="button" className={styles.update_task__button}>
-          <Edit size={10} />
-        </button>
-      )}
-      {isUpdateActive && (
-        <UpsertTaskForm
-          ref={formRef}
-          onSubmitSuccess={(title) => {
-            updateTask({
-              columnId,
-              taskId,
-              updatedTask: { title },
-              onUpdateComplete: () => {
-                setIsUpdateActive(false);
-              },
-            });
-          }}
-        >
-          <FormFooter
-            onDismiss={() => {
-              setIsUpdateActive(false);
+    const getPopOverStyles = () => {
+      invariant(outerRef?.current);
+      const { left, top, width } = outerRef.current.getBoundingClientRect();
+
+      return { left, top, width };
+    };
+
+    return (
+      <>
+        {!isUpdateActive && (
+          <Button
+            type="button"
+            onClick={() => {
+              setIsUpdateActive(true);
             }}
-            submitButtonLabel="Add task"
-          />
-        </UpsertTaskForm>
-      )}
-    </>
-  );
-});
+          >
+            <Edit size={12} />
+          </Button>
+        )}
+        {isUpdateActive &&
+          createPortal(
+            <div className={styles.update_task__container}>
+              <div
+                className={styles.update_task__block}
+                style={getPopOverStyles()}
+              >
+                <UpsertTaskForm
+                  ref={formRef}
+                  initialValue={initialValue}
+                  onSubmitSuccess={(title) => {
+                    updateTask({
+                      columnId,
+                      taskId,
+                      updatedTask: { title },
+                      onUpdateComplete: () => {
+                        setIsUpdateActive(false);
+                      },
+                    });
+                  }}
+                >
+                  <FormFooter submitButtonLabel="Save">{children}</FormFooter>
+                </UpsertTaskForm>
+              </div>
+            </div>,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            document.querySelector("#modalRoot")!,
+          )}
+      </>
+    );
+  },
+);
 
 export { CreateTask, UpdateTask };

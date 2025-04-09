@@ -50,6 +50,7 @@ type ColumnProps = ColumnType & {
 
 const Column = ({ id, tasks, title, TaskComponent }: ColumnProps) => {
   const [columnState, setColumnState] = useState<ColumnState>(IDLE_STATE);
+  // const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
 
   const headerRef = useRef<HTMLDivElement | null>(null);
   const outerRef = useRef<HTMLDivElement | null>(null);

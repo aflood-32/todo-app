@@ -4,19 +4,25 @@ import styles from "./styles.module.css";
 
 import Textarea from "@ui/Textarea";
 
-interface CreateTaskFormProps extends PropsWithChildren {
+interface UpsertTaskFormProps extends PropsWithChildren {
   ref: RefObject<HTMLFormElement | null>;
   onSubmitSuccess: (title: string) => void;
+  initialValue?: string;
+  submitLabel?: string;
+  withBg?: boolean;
 }
 
 const textAreaLabel = "Enter task name";
 
-const CreateTaskForm = ({
+const UpsertTaskForm = ({
   ref,
   onSubmitSuccess,
+  initialValue,
   children,
-}: CreateTaskFormProps) => {
-  const [formData, setFormData] = useState<{ title: string }>({ title: "" });
+}: UpsertTaskFormProps) => {
+  const [formData, setFormData] = useState<{ title: string }>({
+    title: initialValue ?? "",
+  });
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,6 +41,7 @@ const CreateTaskForm = ({
         aria-label={textAreaLabel}
         value={formData.title}
         autoFocus
+        style={{ minHeight: "6rem" }}
         onChange={(e) => {
           setFormData({ ...formData, title: e.target.value });
         }}
@@ -45,4 +52,4 @@ const CreateTaskForm = ({
   );
 };
 
-export default CreateTaskForm;
+export default UpsertTaskForm;
