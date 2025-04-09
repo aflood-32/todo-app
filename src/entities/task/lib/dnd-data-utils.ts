@@ -4,21 +4,21 @@
  * @description Provides type guards and data generators for task drag operations
  */
 
-import { Task } from "../@x";
+import { TaskType } from "../@x";
 
 const taskKey = Symbol("task");
 const taskDropTargetKey = Symbol("task-drop-target");
 
 export interface TaskData {
   [taskKey]: boolean;
-  task: Task;
+  task: TaskType;
   columnId: string;
   rect: DOMRect;
 }
 
 export interface TaskDropTargetData {
   [taskDropTargetKey]: true;
-  task: Task;
+  task: TaskType;
   columnId: string;
 }
 

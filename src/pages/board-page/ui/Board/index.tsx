@@ -2,8 +2,8 @@ import { use, useCallback, useEffect, useRef } from "react";
 import { bindAll } from "bind-event-listener";
 import invariant from "tiny-invariant";
 
-import monitorForColumns from "../lib/monitor-for-columns";
-import monitorForTasks from "../lib/monitor-for-tasks";
+import monitorForColumns from "../../lib/monitor-for-columns";
+import monitorForTasks from "../../lib/monitor-for-tasks";
 
 import styles from "./styles.module.css";
 
@@ -12,23 +12,21 @@ import { CleanupFn } from "@atlaskit/pragmatic-drag-and-drop/dist/types/internal
 import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/element";
 import { unsafeOverflowAutoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/unsafe-overflow/element";
 import { BoardDispatchContext, BoardStateContext } from "@entities/board";
-import { Column, isDraggingAColumn } from "@entities/column";
+import { ColumnType, isDraggingAColumn } from "@entities/column";
 import { isDraggingATask } from "@entities/task";
 import { CreateColumn } from "@features/create-column";
 import { blockBoardPanningAttr } from "@shared/lib/block-board-panning-attr";
-
-interface BoardProps {
-  ColumnComponent: React.FC<Column>;
-}
+import { Column } from "@widgets/column";
+import { Task } from "@widgets/task";
 
 const SCROLL_OFFSET = 1000;
 
-const Board = ({ ColumnComponent }: BoardProps) => {
+const Board = () => {
   const columns = use(BoardStateContext);
   const dispatch = use(BoardDispatchContext);
 
   const setColumnsData = useCallback(
-    (updatedColumns: Column[]) => {
+    (updatedColumns: ColumnType[]) => {
       dispatch({ type: "SET_BOARD_DATA", payload: updatedColumns });
     },
     [dispatch],
@@ -143,11 +141,12 @@ const Board = ({ ColumnComponent }: BoardProps) => {
   return (
     <main className={styles.board} ref={scrollableRef}>
       {columns.map((column) => (
-        <ColumnComponent
+        <Column
           key={column.id}
           tasks={column.tasks}
           id={column.id}
           title={column.title}
+          TaskComponent={Task}
         />
       ))}
       <CreateColumn />

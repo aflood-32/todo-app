@@ -3,7 +3,7 @@ import {
   isColumnData,
   isDraggingAColumn,
 } from "./lib/dnd-data-utils";
-import type { Column } from "./@x";
+import type { ColumnType } from "./@x";
 
-export type { Column };
+export type { ColumnType };
 export { getColumnData, isColumnData, isDraggingAColumn };

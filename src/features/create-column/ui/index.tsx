@@ -7,6 +7,7 @@ import CreateColumnForm from "./CreateColumnForm";
 import styles from "./styles.module.css";
 
 import useClickOutside from "@shared/lib/useClickOutside";
+import FormFooter from "@ui/FormFooter";
 
 const CreateColumn = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -36,15 +37,19 @@ const CreateColumn = () => {
       {isCreateActive && (
         <CreateColumnForm
           ref={formRef}
-          onDismiss={() => {
-            setIsCreateActive(false);
-          }}
           onSubmitSuccess={(title) => {
             createColumn(title, () => {
               setIsCreateActive(false);
             });
           }}
-        />
+        >
+          <FormFooter
+            submitButtonLabel="Add column"
+            onDismiss={() => {
+              setIsCreateActive(false);
+            }}
+          />
+        </CreateColumnForm>
       )}
     </div>
   );

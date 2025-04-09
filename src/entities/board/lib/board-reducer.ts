@@ -46,6 +46,18 @@ const boardReducer = (
         }
         return column;
       });
+    case "DELETE_TASK":
+      return state.map((column) => {
+        if (column.id === action.payload.columnId) {
+          return {
+            ...column,
+            tasks: column.tasks.filter(
+              (task) => task.id !== action.payload.taskId,
+            ),
+          };
+        }
+        return column;
+      });
     default:
       return state;
   }

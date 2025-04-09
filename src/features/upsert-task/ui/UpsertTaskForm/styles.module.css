@@ -1,6 +1,4 @@
 .create_col__form{
-    padding: 0.8rem;
-    background: var(--color-column-background);
     border-radius: var(--col-border-radius);
     display: flex;
     flex-direction: column;

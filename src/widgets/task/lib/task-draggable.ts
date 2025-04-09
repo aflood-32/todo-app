@@ -2,11 +2,11 @@ import invariant from "tiny-invariant";
 
 import { TaskState } from "../types";
 
-import { getTaskInitialData, isTaskData } from "./dnd-data-utils";
-
 import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { preserveOffsetOnSource } from "@atlaskit/pragmatic-drag-and-drop/element/preserve-offset-on-source";
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
+import { getTaskInitialData, isTaskData } from "@entities/task";
+import { TaskType } from "@entities/task";
 import { IDLE_STATE } from "@shared/lib/idle-state";
 
 /**
@@ -21,8 +21,7 @@ import { IDLE_STATE } from "@shared/lib/idle-state";
  */
 interface DraggableArgs {
   element: HTMLElement;
-  taskId: string;
-  title: string;
+  task: TaskType;
   columnId: string;
   setTaskState: React.Dispatch<React.SetStateAction<TaskState>>;
 }
@@ -49,8 +48,7 @@ interface DraggableArgs {
  */
 const taskDraggable = ({
   element,
-  taskId,
-  title,
+  task,
   columnId,
   setTaskState,
 }: DraggableArgs) => {
@@ -58,7 +56,7 @@ const taskDraggable = ({
     element,
     getInitialData: ({ element }) =>
       getTaskInitialData({
-        task: { id: taskId, title },
+        task,
         columnId,
         rect: element.getBoundingClientRect(),
       }),

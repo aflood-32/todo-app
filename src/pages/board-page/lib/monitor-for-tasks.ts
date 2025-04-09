@@ -2,7 +2,7 @@ import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/ad
 import { reorder } from "@atlaskit/pragmatic-drag-and-drop/reorder";
 import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
 import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge";
-import { Column, isColumnData } from "@entities/column";
+import { ColumnType, isColumnData } from "@entities/column";
 import {
   isDraggingATask,
   isTaskData,
@@ -11,20 +11,20 @@ import {
 
 /**
  * @typedef {Object} MonitorForTasksArgs
- * @property {Column[]} columns - Current board columns
- * @property {React.Dispatch<React.SetStateAction<Column[]>>} setColumnsData - State setter
+ * @property {ColumnType[]} columns - Current board columns
+ * @property {React.Dispatch<React.SetStateAction<ColumnType[]>>} setColumnsData - State setter
  */
 interface MonitorForTasksArgs {
-  columns: Column[];
-  setColumnsData: (updatedColumns: Column[]) => void;
+  columns: ColumnType[];
+  setColumnsData: (updatedColumns: ColumnType[]) => void;
 }
 
 /**
  * Monitors and handles complex task DnD operations between columns
  *
  * @param {MonitorForColumnsArgs} config - Monitoring configuration
- * @param {Column[]} config.columns - Current columns state
- * @param {React.Dispatch<React.SetStateAction<Column[]>>} config.setColumnsData - State updater
+ * @param {ColumnType[]} config.columns - Current columns state
+ * @param {React.Dispatch<React.SetStateAction<ColumnType[]>>} config.setColumnsData - State updater
  *
  * @returns {Function} Cleanup function to stop monitoring
  *
@@ -57,7 +57,7 @@ const monitorForTasks = ({ columns, setColumnsData }: MonitorForTasksArgs) => {
       const homeColumnIndex = columns.findIndex(
         (column) => column.id === dragging.columnId,
       );
-      const homeColumn: Column | undefined = columns[homeColumnIndex];
+      const homeColumn: ColumnType | undefined = columns[homeColumnIndex];
 
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!homeColumn) {
@@ -101,7 +101,7 @@ const monitorForTasks = ({ columns, setColumnsData }: MonitorForTasksArgs) => {
             closestEdgeOfTarget: closestEdge,
           });
 
-          const updated: Column = {
+          const updated: ColumnType = {
             ...homeColumn,
             tasks: reordered,
           };
@@ -173,7 +173,7 @@ const monitorForTasks = ({ columns, setColumnsData }: MonitorForTasksArgs) => {
             finishIndex: homeColumn.tasks.length - 1,
           });
 
-          const updated: Column = {
+          const updated: ColumnType = {
             ...homeColumn,
             tasks: reordered,
           };
